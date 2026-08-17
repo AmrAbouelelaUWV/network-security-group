@@ -1,13 +1,16 @@
 variable "name" {
-  type = string
+  description = "Network security group name."
+  type        = string
 }
 
 variable "resource_group_name" {
-  type = string
+  description = "Resource group where the NSG is created."
+  type        = string
 }
 
 variable "location" {
-  type = string
+  description = "Azure region for the NSG."
+  type        = string
 }
 
 variable "subnet_id" {
@@ -15,12 +18,8 @@ variable "subnet_id" {
   type        = string
 }
 
-variable "tags" {
-  type    = map(string)
-  default = {}
-}
-
 variable "security_rules" {
+  description = "List of NSG security rules to add to the NSG."
   type = list(object({
     name                       = string
     priority                   = number
@@ -38,4 +37,20 @@ variable "security_rules" {
     destination_address_prefix = string
   }))
   default = []
+}
+
+variable "biv" {
+  description = "Security classification tag, beschikbaarheid-integriteit-vertrouwelijkheid, 1=high 2=medium 3=low."
+  type        = string
+
+  validation {
+    condition     = can(regex("^[1-3]{3}$", var.biv))
+    error_message = "BIV must be three digits between 1 and 3, for example 122."
+  }
+}
+
+variable "tags" {
+  description = "Additional tags. The module-owned biv tag takes precedence."
+  type        = map(string)
+  default     = {}
 }

@@ -1,0 +1,17 @@
+# Terraform local state and cache
+.terraform/
+.terraform.lock.hcl
+*.tfstate
+*.tfstate.*
+
+# Terraform crash and override files
+crash.log
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+.terraform.tfstate.lock.info
+
+# OS/editor
+.DS_Store
+Thumbs.db
